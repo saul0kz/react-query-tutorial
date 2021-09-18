@@ -18,9 +18,9 @@ const People = () => {
     <div>
       {' '}
       <h1> People = {data?.count} </h1>
-      {isSuccess && data.results.map((person) => <Person person={person} />)}
       <p> {status}</p>
-      {error && <div>{error.stack}</div>}
+      {isSuccess && data.results.map((person) => <Person person={person} />)}
+     {error && <div>{error.stack}</div>}
     </div>
   );
 };

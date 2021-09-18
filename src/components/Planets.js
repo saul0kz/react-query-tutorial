@@ -18,8 +18,9 @@ const Plantes = () => {
     <div>
       {' '}
       <h1> Planets = {data?.count} </h1>
-      {isSuccess && data.results.map((planet) => <Planet planet={planet} />)}
       <p> {status}</p>
+      {isSuccess && data.results.map((planet) => <Planet planet={planet} />)}
+      
       {error && <div>{error.stack}</div>}
     </div>
   );
