@@ -8,7 +8,9 @@ const fetchPeople = async () => {
 };
 
 const People = () => {
-  const { error, data, isSuccess, status } = useQuery('people', fetchPeople);
+  const { error, data, isSuccess, isFetching, status } = useQuery('people', fetchPeople, {
+    staleTime: 50000,      
+  });
 
   useEffect(() => {
     console.log(data);
@@ -18,6 +20,7 @@ const People = () => {
     <div>
       {' '}
       <h1> People = {data?.count} </h1>
+      {isFetching && <div>isFetching</div>}
       <p> {status}</p>
       {isSuccess && data.results.map((person) => <Person person={person} />)}
      {error && <div>{error.stack}</div>}

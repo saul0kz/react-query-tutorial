@@ -8,7 +8,13 @@ const fetchPlantes = async () => {
 };
 
 const Plantes = () => {
-  const { error, data, isSuccess, status } = useQuery('planets', fetchPlantes);
+  const { error, data, isSuccess, status, isFetching } = useQuery(
+    'planets',
+    fetchPlantes,
+    {
+      staleTime: 10000,      
+    }
+  );
 
   useEffect(() => {
     console.log(data);
@@ -18,9 +24,9 @@ const Plantes = () => {
     <div>
       {' '}
       <h1> Planets = {data?.count} </h1>
+      {isFetching && <div>isFetching</div>}
       <p> {status}</p>
       {isSuccess && data.results.map((planet) => <Planet planet={planet} />)}
-      
       {error && <div>{error.stack}</div>}
     </div>
   );
