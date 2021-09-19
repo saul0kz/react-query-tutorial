@@ -1,18 +1,20 @@
 import { useQuery } from 'react-query';
 import Planet from './Planet';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const fetchPlantes = async () => {
-  const res = await fetch('https://swapi.dev/api/planets/');
+const fetchPlantes = async (page) => {
+  const res = await fetch(`https://swapi.dev/api/planets/?page=${page}`);
   return res.json();
 };
 
 const Plantes = () => {
+  const [page, setPage] = useState(1);
+
   const { error, data, isSuccess, status, isFetching } = useQuery(
-    'planets',
-    fetchPlantes,
+    ['planets', page],
+    () => fetchPlantes(page),
     {
-      staleTime: 10000,      
+      staleTime: 5000,
     }
   );
 
@@ -24,6 +26,8 @@ const Plantes = () => {
     <div>
       {' '}
       <h1> Planets = {data?.count} </h1>
+      {data?.previous && <button onClick={() => setPage(page-1)}>Previous</button>}
+      {data?.next && <button onClick={() => setPage(page+1)}>Next</button>}
       {isFetching && <div>isFetching</div>}
       <p> {status}</p>
       {isSuccess && data.results.map((planet) => <Planet planet={planet} />)}
