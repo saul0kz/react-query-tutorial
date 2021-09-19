@@ -3,9 +3,11 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 import './App.css';
+import Loading from './components/Loading';
 import Navbar from './components/Navbar';
 import People from './components/People';
 import Planets from './components/Planets';
+
 
 function Content() {
   const [page, setPage] = useState("planets");
@@ -29,6 +31,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Loading/>
       <Content />
       <ReactQueryDevtools />
     </QueryClientProvider>

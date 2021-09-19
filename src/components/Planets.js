@@ -25,12 +25,20 @@ const Plantes = () => {
   return (
     <div>
       {' '}
-      <h1> Planets = {data?.count} </h1>
-      {data?.previous && <button onClick={() => setPage(page-1)}>Previous</button>}
-      {data?.next && <button onClick={() => setPage(page+1)}>Next</button>}
+      <h1> Planets </h1>
       {isFetching && <div>isFetching</div>}
       <p> {status}</p>
-      {isSuccess && data.results.map((planet) => <Planet planet={planet} />)}
+      {isSuccess && (
+        <>
+          {data.previous && (
+            <button onClick={() => setPage(page - 1)}>Previous</button>
+          )}
+          {data.next && <button onClick={() => setPage(page + 1)}>Next</button>}
+          {data.results.map((planet) => (
+            <Planet planet={planet} />
+          ))}
+        </>
+      )}
       {error && <div>{error.stack}</div>}
     </div>
   );
