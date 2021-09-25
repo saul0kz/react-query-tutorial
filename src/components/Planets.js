@@ -9,12 +9,13 @@ const fetchPlantes = async (page) => {
 
 const Plantes = () => {
   const [page, setPage] = useState(1);
-
-  const { error, data, isSuccess, status, isFetching } = useQuery(
+  const [isEnabled, setIsEnabled] = useState(false);
+  const { error, data, isSuccess, status, isFetching, refetch } = useQuery(
     ['planets', page],
     () => fetchPlantes(page),
     {
-      staleTime: 5000,
+      staleTime: 3000,
+      enabled: isEnabled,
     }
   );
 
@@ -28,8 +29,12 @@ const Plantes = () => {
       <h1> Planets </h1>
       {isFetching && <div>isFetching</div>}
       <p> {status}</p>
+      <button onClick={() => setIsEnabled(!isEnabled)}>
+        {isEnabled ? 'Disable' : 'Enable'}
+      </button>
       {isSuccess && (
         <>
+          <button onClick={() => refetch()}>Fetch Planets</button>
           {data.previous && (
             <button onClick={() => setPage(page - 1)}>Previous</button>
           )}
